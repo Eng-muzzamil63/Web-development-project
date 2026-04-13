@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Validator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,700;1,300&family=Poppins:wght@300;400;500;600&display=swap');
+
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: 'Noto Sans', sans-serif;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: black;
+            color: white;
+            padding: 19px 12px;
+        }
+
+        ul {
+            display: flex;
+        }
+
+        ul li {
+            list-style: none;
+            padding: 0 13px;
+        }
+
+        ul li a {
+            color: white;
+            text-decoration: none;
+        }
+
+        ul>li>a:hover {
+            color: rgb(192, 189, 205);
+        }
+
+        main {
+            min-height: 100vh;
+        }
+
+        .logo img {
+            width: 15px;
+            filter: invert(1);
+        }
+
+        .container {
+            max-width: 80vw;
+            margin: auto;
+            padding: 9px 15px;
+        }
+
+        .container h1 {
+            padding: 12px 0;
+        }
+
+        input[type='text'] {
+            min-width: 23vw;
+            padding: 3px 12px;
+            border: 2px solid black;
+            border-radius: 4px;
+            font-size: 20px;
+        }
+
+        .btn {
+            background: black;
+            color: white;
+            padding: 9px 12px;
+            border: 1px solid gray;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        #resultCont div::first-letter {
+            text-transform: uppercase;
+        }
+
+        footer {
+            font-size: 12px;
+            background-color: black;
+            color: white;
+            display: flex;
+            padding: 12px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @media only screen and (max-width: 600px) {
+
+            body {
+                background-color: lightblue;
+            }
+
+            .container {
+                font-size: 12px;
+            }
+
+            input[type='text'] {
+                width: 100%;
+            }
+
+            nav {
+                flex-direction: column;
+            }
+
+            .logo {
+                padding: 6px 0;
+                font-size: 12px;
+            }
+
+            .logo span {
+                font-size: 20px;
+            }
+
+            .logo img {
+                width: 15px;
+                filter: invert(1);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav>
+            <div class="logo">iValidate</div>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/">About</a></li>
+                <li><a href="/">Contact Us</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="container"></div>
+        <h1>Enter your email to validate</h1>
+        <form action="/submit" method="post">
+            <input placeholder="Enter your email to validate" type="text" id="username" name="username" required>
+            <br><br>
+            <input id="submitBtn" class="btn" type="submit" value="Submit">
+        </form>
+        </div>
+
+        <div class="container">
+            <h2>Your Results</h2>
+            <div id="resultCont">
+                Your results will show here
+
+            </div>
+        </div>
+    </main>
+    <footer>
+        Copyright | iValidate | All rights are reserved
+    </footer>
+    <script>
+        console.log("This is my script")
+
+        let result = {
+            "tag": "",
+            "free": false,
+            "role": false,
+            "user": "akshaykumar",
+            "email": "akshaykumar@codewithharry.com",
+            "score": 0.64,
+            "state": "undeliverable",
+            "domain": "codewithharry.com",
+            "reason": "invalid_mailbox",
+            "mx_found": true,
+            "catch_all": null,
+            "disposable": false,
+            "smtp_check": false,
+            "did_you_mean": "",
+            "format_valid": true
+        }
+
+
+
+        submitBtn.addEventListener("click", async (e) => {
+            e.preventDefault()
+            console.log("Clicked!")
+            resultCont.innerHTML = `<img width="123" src="img/loading.svg" alt="">`
+            let key = "ema_live_ITkV5Pqq40WNdMLdjqMZlNcb4AEBrNvWiSFd1MYE"
+            let email = document.getElementById("username").value
+            let url = `https://api.emailvalidation.io/v1/info?apikey=${key}&email=${email}`
+            let res = await fetch(url)
+            let result = await res.json()
+            let str = ``
+            for (key of Object.keys(result)) {
+                if (result[key] !== "" && result[key] !== " ") {
+                    str = str + `<div>${key}: ${result[key]}</div>`
+                }
+            }
+
+            console.log(str)
+            resultCont.innerHTML = str
+        })
+    </script>
+</body>
+
+</html>
