@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Animation</title>
+</head>
+ <style>
+    .container{
+        background: linear-gradient(135deg, #039393, #0ea5a5);
+        height: 80vh;
+        width: 30vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        margin: auto;
+    }
+
+    .box{
+        width: 60px;
+        height: 60px;
+        background-color: red;
+        color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+
+        animation: smoothMove 4s ease-in-out infinite alternate,
+                   spinScale 4s ease-in-out infinite;
+    }
+
+    @keyframes smoothMove {
+        0%{
+            transform: translate(0, 0);
+            background-color: #ef4444;
+        }
+        25%{
+            transform: translate(80px, -80px);
+            background-color: #f59e0b;
+        }
+        50%{
+            transform: translate(120px, 0);
+            background-color: #10b981;
+        }
+        75%{
+            transform: translate(80px, 80px);
+            background-color: #3b82f6;
+        }
+        100%{
+            transform: translate(0, 0);
+            background-color: #8b5cf6;
+        }
+    }
+
+    @keyframes spinScale {
+        0%{
+            transform: rotate(0deg) scale(1);
+        }
+        50%{
+            transform: rotate(180deg) scale(1.3);
+        }
+        100%{
+            transform: rotate(360deg) scale(1);
+        }
+    } 
+</style> 
+
+<body>
+    <div class="container">
+        <div class="box"></div>
+    </div>
+    
+</body>
+</html>
